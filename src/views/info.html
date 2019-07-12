@@ -1,0 +1,60 @@
+<md-dialog>
+  <div>
+    <div>
+      <span class="md-title blue_text">Room {{info.room.code}}</span>
+      <div class="subhead_text">({{info.room.appointment.start_date | date: 'MM/DD/YYYY'}})</div>
+    </div>
+
+    <div class="mt-20 title_text">
+      {{info.getClientInfo()}}
+    </div>
+
+    <div class="mt-20">
+      <span class="title_text">Vital signs:</span>
+      HT: {{info.vs.height_ft}}'{{info.vs.height_in}}'', WT: {{info.vs.weight}}lbs., BMI: {{info.vs.bmi}}
+    </div>
+
+    <div class="mt-20">
+      <md-checkbox ng-checked="info.isChecked()"
+                   md-indeterminate="info.isIndeterminate()"
+                   ng-click="info.toggleAll()"
+                   ng-disabled="info.showTabs"
+                   class="blue_text blue_checkbox">
+        <span ng-if="info.isChecked()">Un-</span>Select All
+      </md-checkbox>
+
+      <div ng-repeat="form in info.forms">
+        <md-checkbox ng-checked="info.exists(form)" ng-click="info.toggle(form)" ng-disabled="info.showTabs">
+          {{ form.title }}
+        </md-checkbox>
+      </div>
+
+      <div layout layout-align="center">
+        <md-button ng-show="info.selected.length" ng-click="info.showTabs = true;">Sign</md-button>
+      </div>
+
+      <md-content ng-if="info.showTabs">
+        <md-tabs>
+          <md-tab ng-repeat="tab in info.selected"
+                  label="{{ tab.short_title }}"
+                  ng-init="$first && info.loadTabData(tab)"
+                  ng-click="info.loadTabData(tab)">
+            <md-content>
+              <ul>
+                <li ng-repeat="data in info.tabs[tab.code]" class="custom_li">
+                  <md-checkbox aria-label="Select All"
+                               ng-if="data.need_initials && !data[$index].isChecked"
+                               ng-click="data[$index].isChecked = true">
+                  </md-checkbox>
+                  <span ng-if="data[$index].isChecked" class="title_text">{{info.clientInitials}}</span>
+                  {{data.content}}
+                </li>
+              </ul>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+    </div>
+
+  </div>
+</md-dialog>

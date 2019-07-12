@@ -1,5 +1,10 @@
-// Entry point for project
+import angular from 'angular';
+import ngAnimate from 'angular-animate';
+import ngAria from 'angular-aria';
+import ngMaterial from 'angular-material';
 
-export default (function () {
-  document.getElementById("app").innerHTML = "<h1>Hello from Docapp</h1>";
-}());
+export const appModule = angular.module('app', [
+  ngAnimate,
+  ngAria,
+  ngMaterial
+]);

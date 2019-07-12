@@ -3,7 +3,38 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/app.js",
+  entry: "./app",
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: { minimize: true }
+          }
+        ]
+      },
+      {
+        test: /\.(less|css)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: false
+            }
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      }
+    ]
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js"

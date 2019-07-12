@@ -1,0 +1,28 @@
+@white: #fff;
+@main-blue: #1976D2;
+
+md-dialog{
+  padding: 20px;
+  min-height: 300px;
+
+  md-content{
+    background: @white;
+
+    md-tabs{
+      .md-tab{
+        &.md-active{
+          color: @main-blue;
+        }
+      }
+
+      md-ink-bar{
+        color: @main-blue;
+        background: @main-blue;
+      }
+
+      md-checkbox{
+        margin: 0;
+      }
+    }
+  }
+}

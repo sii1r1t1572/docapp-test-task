@@ -1,10 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Docapp Test Task</title>
-</head>
-<body>
-  <div id="app"></div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Docapp Test Task</title>
+  </head>
+
+  <body ng-app="app">
+    <div id="app" ng-controller="AppCtrl as app">
+      <md-content layout layout-wrap>
+        <div ng-repeat="room in app.rooms"
+             flex-gt-md="25"
+             flex-md="50"
+             flex="100">
+          <md-card class="appointment_block">
+            <md-card-header layout>
+              <md-card-header-text>
+                <span class="md-title">Room {{room.code }}</span>
+                <span class="md-subhead">({{room.appointment.code}})</span>
+              </md-card-header-text>
+
+              <md-card-header-text layout-align="end" class="appointment_time">
+                {{app.getAmTime(room.appointment.start_time)}}
+                <countdown countdown-start="room.update_time"></countdown>
+              </md-card-header-text>
+            </md-card-header>
+
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">
+                  {{room.appointment.first_name}} {{room.appointment.last_name}}
+                </span>
+                <span class="status_block">{{room.status.title}}</span>
+              </md-card-title-text>
+            </md-card-title>
+
+            <md-card-content>
+              <p>
+                <span class="blue_text">D: </span>{{room.appointment.doctor_title}}
+                <br/>
+                <span class="blue_text">A: </span>{{room.appointment.assistant}}
+              </p>
+            </md-card-content>
+
+            <md-card-actions layout layout-align="end">
+              <md-button ng-click="app.showInfo($event, room)">View Details</md-button>
+            </md-card-actions>
+          </md-card>
+        </div>
+      </md-content>
+    </div>
+  </body>
 </html>
